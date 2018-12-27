@@ -1,4 +1,4 @@
-# Github-sort-by-recently
+# Github: sort by recently
 Load this userscript in tampermonkey.
 It adds 2 links (named "(r)") to sort by "recently updated" (issues &amp; PR tabs)
 

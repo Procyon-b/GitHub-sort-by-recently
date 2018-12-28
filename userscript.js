@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Github: sort by recently updated
+// @name         GitHub: sort by recently updated
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  Adds 2 links to sort by "recently updated" (issues & PR)
@@ -44,8 +44,8 @@ function addLink() {
     if (e.id) return;
     //console.info('addLink link added',e,q);
     var url=e.parentNode.href+'?q='+(q?escape(q):'')+'+is%3Aopen+sort%3Aupdated-desc', style='';
-    if (url == location.href) style='background-color:#EEEEEE;'
-    e.innerHTML+='<a style="color:inherit; text-decoration:inherit;" href="'+url+'"> <span style='+style+'>(r)</span> </a>';
+    if (url == location.href) style='style="background-color:#EEEEEE;"';
+    e.innerHTML+='<a style="color:inherit; text-decoration:inherit;" href="'+url+'"> <span '+style+'>(r)</span> </a>';
     e.id="addedModifiedLink";
     }
   

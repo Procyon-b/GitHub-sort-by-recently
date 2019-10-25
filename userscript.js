@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         GitHub: sort by recently updated
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  Adds 2 links to sort by "recently updated" (issues & PR)
 // @author       Achernar
-// @match        https://github.com/*/*
+// @match        https://github.com/*
 // @run-at       document-end
 // @grant        none
 // @noframes
@@ -15,14 +15,12 @@
 'use strict';
 var E=document.getElementById("js-repo-pjax-container");
 //console.info('insert sort by recent?',E);
-if (!E) { E=document.querySelector('nav.reponav'); E=E && E.parentNode.parentNode; }
+if (!E) { E=document.querySelector('.application-main main'); }
 if (!E) return;
 //console.info(E);
 
 var obs=new MutationObserver(cb), config = { attributes: false, childList: true, subtree: false};
 obs.observe(E, config);
-
-var to=0;
 
 function cb(mutL,o) {
   for(var mut of mutL) {
@@ -36,8 +34,8 @@ function cb(mutL,o) {
 
 function addLink() {
   //console.info('addLink called');
-  to=0;
   var e=E.querySelector('nav');
+  if (!e) return;
 
   function aLink(e,q) {
     if (!e) return;

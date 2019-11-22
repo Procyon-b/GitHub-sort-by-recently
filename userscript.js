@@ -51,8 +51,8 @@ function addLink() {
     aLink(e.querySelector(':scope span a[data-selected-links~="repo_pulls"] span[itemprop="name"]'),'is:pr');
     }
   if (user=document.head.querySelector(':scope meta[name="user-login"]')) {
-    aLink(document.querySelector('nav[aria-label="Global"] a[href="/pulls"]'), 'is:open+is:pr+author:'+user.content+'+archived:false', 'color:darkgray;','zoom:80%;');
-    aLink(document.querySelector('nav[aria-label="Global"] a[href="/issues"]'), 'is:open+is:issue+author:'+user.content+'+archived:false', 'color:darkgray;','zoom:80%;');
+    aLink(document.querySelector('nav[aria-label="Global"] a[href="/pulls"]'), 'is:open+is:pr+author:'+user.content+'+archived:false', ' ','zoom:80%;');
+    aLink(document.querySelector('nav[aria-label="Global"] a[href="/issues"]'), 'is:open+is:issue+author:'+user.content+'+archived:false', ' ','zoom:80%;');
     }
   }
 

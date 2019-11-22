@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub: sort by recently updated
-// @namespace    http://tampermonkey.net/
-// @version      0.2
+// @namespace    https://github.com/Procyon-b
+// @version      0.3
 // @description  Adds 2 links to sort by "recently updated" (issues & PR)
 // @author       Achernar
 // @match        https://github.com/*
@@ -26,7 +26,6 @@ function cb(mutL,o) {
   for(var mut of mutL) {
     if (mut.type == 'childList') {
       //console.log('A child node has been added or removed.',mut);
-      //if (!to) to=setTimeout(addLink,0)
       addLink();
       }
     }
@@ -34,21 +33,27 @@ function cb(mutL,o) {
 
 function addLink() {
   //console.info('addLink called');
-  var e=E.querySelector('nav');
-  if (!e) return;
+  var e=E.querySelector('nav'), user;
 
-  function aLink(e,q) {
+  function aLink(e,q,st,st0) {
     if (!e) return;
     if (e.id) return;
-    //console.info('addLink link added',e,q);
-    var url=e.parentNode.href+'?q='+(q?escape(q):'')+'+is%3Aopen+sort%3Aupdated-desc', style='';
-    if (url == location.href) style='style="background-color:#EEEEEE;"';
-    e.innerHTML+='<a style="color:inherit; text-decoration:inherit;" href="'+url+'"> <span '+style+'>(r)</span> </a>';
+    //console.info('addLink link added',e,q,arguments);
+    var astyle=((st0!=undefined) && st0) || '', style='', url=e.href || e.parentNode.href, Q=url.indexOf('?')>=0;
+    url+=(Q?'':'?q=')+(q?'+'+escape(q):'')+(Q?'':'+is%3Aopen')+'+sort%3Aupdated-desc';
+    if ((url == location.href)) style+=( ((st!=undefined) && st) || 'background-color:#EEEEEE;');
+    e.innerHTML+='<a style="color:inherit; text-decoration:inherit;'+astyle+'" href="'+url+'"> <span'+(style?' style="'+style+'"':'')+'>(r)</span> </a>';
     e.id="addedModifiedLink";
     }
-  
-  aLink(e.querySelector('span a[data-selected-links~="repo_issues"] span[itemprop="name"]'),'is:issue');
-  aLink(e.querySelector('span a[data-selected-links~="repo_pulls"] span[itemprop="name"]'),'is:pr');
+
+  if (e) {
+    aLink(e.querySelector(':scope span a[data-selected-links~="repo_issues"] span[itemprop="name"]'),'is:issue');
+    aLink(e.querySelector(':scope span a[data-selected-links~="repo_pulls"] span[itemprop="name"]'),'is:pr');
+    }
+  if (user=document.head.querySelector(':scope meta[name="user-login"]')) {
+    aLink(document.querySelector('nav[aria-label="Global"] a[href="/pulls"]'), 'is:open+is:pr+author:'+user.content+'+archived:false', 'color:darkgray;','zoom:80%;');
+    aLink(document.querySelector('nav[aria-label="Global"] a[href="/issues"]'), 'is:open+is:issue+author:'+user.content+'+archived:false', 'color:darkgray;','zoom:80%;');
+    }
   }
 
 addLink();

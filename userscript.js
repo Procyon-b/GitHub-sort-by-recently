@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub: sort by recently updated
 // @namespace    https://github.com/Procyon-b
-// @version      0.4
+// @version      0.4.1
 // @description  Adds 2 links to sort by "recently updated" (issues & PR)
 // @author       Achernar
 // @match        https://github.com/*
@@ -63,6 +63,7 @@ function addLink() {
         c.innerText='Commenter';
         c.title=aria.value+' you commented';
         c.attributes['aria-label'].value=aria.value+' you commented';
+        c.removeAttribute('aria-current');
         c.id='commenter';
         let u=c.href.replace(RE,'+commenter%3A'+user.content);
         if (u.startsWith(location.origin)) u=u.substr(location.origin.length);

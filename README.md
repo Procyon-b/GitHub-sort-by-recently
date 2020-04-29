@@ -6,7 +6,7 @@ Click the file named `userscript.user.js` (not the other one without the `.user.
 Once opened, click the `Raw` button.<br>
 At this point your extension will take control, and will ask you if you want to install it.
 
-## Userscript in use
+## What it does
 It adds 2 links (named "(r)") to sort by "recently updated" (issues &amp; PR tabs)<br>
 
 ![screenshot](https://raw.githubusercontent.com/Procyon-b/Github-sort-by-recently/master/screenshots/sortByRecent.png)

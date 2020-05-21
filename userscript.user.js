@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub: sort by recently updated
 // @namespace    https://github.com/Procyon-b
-// @version      0.5.1
+// @version      0.5.2
 // @description  Adds 2 links to sort by "recently updated" (issues & PR)
 // @author       Achernar
 // @match        https://github.com/*
@@ -71,6 +71,7 @@ function addLink() {
         let cmt='+commenter%3A'+user.content, sel=e.getElementsByClassName('selected');
         RE=new RegExp('\\+commenter%3A'+user.content,'g');
         for (let c,i=0; c=e.children[i]; i++) {
+          if (!c.href) continue;
           if ( (c.id=='commenter') && !sel.length) c.classList.add('selected');
           let u=c.href.replace(RE, '');
           if (u.startsWith(location.origin)) u=u.substr(location.origin.length);

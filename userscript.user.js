@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub: sort by recently updated
 // @namespace    https://github.com/Procyon-b
-// @version      0.5.2
+// @version      0.5.3
 // @description  Adds 2 links to sort by "recently updated" (issues & PR)
 // @author       Achernar
 // @match        https://github.com/*
@@ -23,7 +23,6 @@ obs.observe(E, config);
 function cb(mutL,o) {
   for(var mut of mutL) {
     if (mut.type == 'childList') {
-      //console.log('A child node has been added or removed.',mut);
       if (TO) clearTimeout(TO);
       TO=setTimeout(addLink,0);
       }
@@ -31,7 +30,7 @@ function cb(mutL,o) {
 }
 
 function addLink() {
-  var e=E.querySelector('nav'), user;
+  var e=E.querySelector('nav.js-repo-nav, nav'), user;
 
   function aLink(e,q,st,st0) {
     if (!e) return;
@@ -45,8 +44,8 @@ function addLink() {
 
   user=document.head.querySelector(':scope meta[name="user-login"]');
   if (e) {
-    aLink(e.querySelector(':scope span a[data-selected-links~="repo_issues"] span[itemprop="name"], :scope li a[data-selected-links~="repo_issues"] span[itemprop="name"]'),'is:issue');
-    aLink(e.querySelector(':scope span a[data-selected-links~="repo_pulls"] span[itemprop="name"], :scope li a[data-selected-links~="repo_pulls"] span[itemprop="name"]'),'is:pr');
+    aLink(e.querySelector(':scope span a[data-selected-links~="repo_issues"] span[itemprop="name"], :scope li a[data-selected-links~="repo_issues"] span[itemprop="name"], :scope li a[data-selected-links~="repo_issues"] span[data-content]'),'is:issue');
+    aLink(e.querySelector(':scope span a[data-selected-links~="repo_pulls"] span[itemprop="name"], :scope li a[data-selected-links~="repo_pulls"] span[itemprop="name"], :scope li a[data-selected-links~="repo_pulls"] span[data-content]'),'is:pr');
     let aria=e.attributes['aria-label'], c, RE;
     if (aria && ['Issues','Pull Requests'].includes(aria.value) ) {
       if (!e.id) {

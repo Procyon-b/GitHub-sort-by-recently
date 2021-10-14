@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub: sort by recently updated
 // @namespace    https://github.com/Procyon-b
-// @version      0.5.3
+// @version      0.5.4
 // @description  Adds 2 links to sort by "recently updated" (issues & PR)
 // @author       Achernar
 // @match        https://github.com/*
@@ -64,7 +64,11 @@ function addLink() {
         c.classList.remove('selected');
         e.appendChild(c);
         setTimeout(addLink,0);
-        if (aria.value=='Pull Requests') e.innerHTML+='<style>.subnav-search-input-wide {width: 450px;}</style>';
+        if (aria.value=='Pull Requests') {
+          let s=document.createElement('style');
+          s.textContent='.subnav-search-input-wide {width: 450px;}';
+          c.appendChild(s);
+          }
         }
       else {
         let cmt='+commenter%3A'+user.content, sel=e.getElementsByClassName('selected');

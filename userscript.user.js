@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub: sort by recently updated
 // @namespace    https://github.com/Procyon-b
-// @version      0.5.4
+// @version      0.5.5
 // @description  Adds 2 links to sort by "recently updated" (issues & PR)
 // @author       Achernar
 // @match        https://github.com/*
@@ -38,7 +38,7 @@ function addLink() {
     var astyle=((st0!=undefined) && st0) || '', style='', url=e.href || e.parentNode.href, Q=url.indexOf('?')>=0;
     url+=(Q?'':'?q=')+(q?'+'+escape(q):'')+(Q?'':'+is%3Aopen')+'+sort%3Aupdated-desc';
     if ((url == location.href)) style+=( ((st!=undefined) && st) || 'background-color:#EEEEEE;');
-    e.innerHTML+='<a style="color:inherit; text-decoration:inherit;'+astyle+'" href="'+url+'"> <span'+(style?' style="'+style+'"':'')+'>(r)</span> </a>';
+    e.innerHTML+='<a style="color:inherit; text-decoration:inherit; position:relative;'+astyle+'" href="'+url+'"> <span'+(style?' style="'+style+'"':'')+'>(r)</span> </a>';
     e.id="addedModifiedLink";
     }
 

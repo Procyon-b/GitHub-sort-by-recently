@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub: sort by recently updated
 // @namespace    https://github.com/Procyon-b
-// @version      0.5.5
+// @version      0.5.6
 // @description  Adds 2 links to sort by "recently updated" (issues & PR)
 // @author       Achernar
 // @match        https://github.com/*
@@ -13,8 +13,8 @@
 (function() {
 
 'use strict';
-var E=document.getElementById("js-repo-pjax-container");
-if (!E) { E=document.querySelector('.application-main main'); }
+var E;
+getE();
 if (!E) return;
 
 var TO, obs=new MutationObserver(cb), config = { attributes: false, childList: true, subtree: false};
@@ -29,8 +29,20 @@ function cb(mutL,o) {
     }
 }
 
+function getE() {
+  if (!E || !E.offsetParent) {
+    E=document.getElementById("js-repo-pjax-container") || document.querySelector('.application-main main');
+    }
+  return E;
+  }
+
+new MutationObserver(function(){
+  if (TO) clearTimeout(TO);
+  TO=setTimeout(addLink,0);
+  }).observe(document.body, { attributes: false, childList: true, subtree: false });
+
 function addLink() {
-  var e=E.querySelector('nav.js-repo-nav, nav'), user;
+  var e=getE().querySelector('nav.js-repo-nav, nav'), user;
 
   function aLink(e,q,st,st0) {
     if (!e) return;
